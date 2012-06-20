@@ -67,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$error_msg .= "Please fill in all the required fields and submit again.\r\n";
 	}
 
-	if (isset($requiredFields['name']) && !empty($_POST['name']) !preg_match("/^[a-zA-Z-'\s]*$/", stripslashes($_POST['name'])))
+	if (isset($requiredFields['name']) && !empty($_POST['name']) && !preg_match("/^[a-zA-Z-'\s]*$/", stripslashes($_POST['name'])))
 		$error_msg .= "The name field must not contain special characters.\r\n";
-	if (isset($requiredFields['email']) && !empty($_POST['email'] && !preg_match('/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+' . '(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i', strtolower($_POST['email'])))
+	if (isset($requiredFields['email']) && !empty($_POST['email']) && !preg_match('/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+' . '(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i', strtolower($_POST['email'])))
 		$error_msg .= "That is not a valid e-mail address.\r\n";
 	if (!empty($_POST['url']) && !preg_match('/^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i', $_POST['url']))
 		$error_msg .= "Invalid website url.\r\n";
@@ -146,7 +146,7 @@ function get_data($var) {
 <body>
 
 <!--
-	Free PHP Mail Form v2.4 - Secure single-page PHP mail form for your website
+	Free PHP Mail Form v2.4.1 - Secure single-page PHP mail form for your website
 	Copyright (c) Jem Turner 2007, 2008, 2010, 2011, 2012
 	http://jemsmailform.com/
 
