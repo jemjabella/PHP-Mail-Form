@@ -9,7 +9,7 @@ $requiredFields = "name,email,comments"; // names of the fields you'd like to be
 
 
 // DO NOT EDIT BELOW HERE
-$error_msg = null;
+$error_msg = array();
 $result = null;
 
 $requiredFields = explode(",", $requiredFields);
@@ -33,7 +33,7 @@ function isBot() {
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	if (isBot() !== false)
-		$error_msg .= "No bots please! UA reported as: ".$_SERVER['HTTP_USER_AGENT'];
+		$error_msg[] = "No bots please! UA reported as: ".$_SERVER['HTTP_USER_AGENT'];
 		
 	// lets check a few things - not enough to trigger an error on their own, but worth assigning a spam score.. 
 	// score quickly adds up therefore allowing genuine users with 'accidental' score through but cutting out real spam :)
@@ -63,16 +63,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	foreach($requiredFields as $field) {
 		trim($_POST[$field]);
 		
-		if (!isset($_POST[$field]) || empty($_POST[$field]))
-			$error_msg .= "Please fill in all the required fields and submit again.\r\n";
+		if (!isset($_POST[$field]) || empty($_POST[$field]) && array_pop($error_msg) != "Please fill in all the required fields and submit again.\r\n")
+			$error_msg[] = "Please fill in all the required fields and submit again.";
 	}
 
 	if (!empty($_POST['name']) && !preg_match("/^[a-zA-Z-'\s]*$/", stripslashes($_POST['name'])))
-		$error_msg .= "The name field must not contain special characters.\r\n";
+		$error_msg[] = "The name field must not contain special characters.\r\n";
 	if (!empty($_POST['email']) && !preg_match('/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+' . '(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i', strtolower($_POST['email'])))
-		$error_msg .= "That is not a valid e-mail address.\r\n";
+		$error_msg[] = "That is not a valid e-mail address.\r\n";
 	if (!empty($_POST['url']) && !preg_match('/^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i', $_POST['url']))
-		$error_msg .= "Invalid website url.\r\n";
+		$error_msg[] = "Invalid website url.\r\n";
 	
 	if ($error_msg == NULL && $points <= $maxPoints) {
 		$subject = "Automatic Form Email";
@@ -109,11 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				$disable = true;
 			}
 		} else {
-			$error_msg = 'Your mail could not be sent this time. ['.$points.']';
+			$error_msg[] = 'Your mail could not be sent this time. ['.$points.']';
 		}
 	} else {
 		if (empty($error_msg))
-			$error_msg = 'Your mail looks too much like spam, and could not be sent this time. ['.$points.']';
+			$error_msg[] = 'Your mail looks too much like spam, and could not be sent this time. ['.$points.']';
 	}
 }
 function get_data($var) {
@@ -164,8 +164,8 @@ function get_data($var) {
 -->
 
 <?php
-if ($error_msg != NULL) {
-	echo '<p class="error">ERROR: '. nl2br($error_msg) . "</p>";
+if (!empty($error_msg)) {
+	echo '<p class="error">ERROR: '. implode("<br />", $error_msg) . "</p>";
 }
 if ($result != NULL) {
 	echo '<p class="success">'. $result . "</p>";
