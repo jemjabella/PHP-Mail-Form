@@ -58,6 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$points += 1;
 	if (strlen($_POST['comments']) < 15 || strlen($_POST['comments'] > 1500))
 		$points += 2;
+	if (preg_match("/[bcdfghjklmnpqrstvwxyz]{7,}/i", $_POST['comments']))
+		$points += 1;
 	// end score assignments
 
 	foreach($requiredFields as $field) {
@@ -146,7 +148,7 @@ function get_data($var) {
 <body>
 
 <!--
-	Free PHP Mail Form v2.4.2 - Secure single-page PHP mail form for your website
+	Free PHP Mail Form v2.4.3 - Secure single-page PHP mail form for your website
 	Copyright (c) Jem Turner 2007, 2008, 2010, 2011, 2012
 	http://jemsmailform.com/
 
