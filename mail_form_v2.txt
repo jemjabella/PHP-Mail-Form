@@ -95,11 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$message .= 'Points: '.$points;
 
 		if (strstr($_SERVER['SERVER_SOFTWARE'], "Win")) {
-			$headers   = "From: $yourEmail\n";
-			$headers  .= "Reply-To: {$_POST['email']}";
+			$headers   = "From: $yourEmail\r\n";
+			$headers  .= "Reply-To: {$_POST['email']}\r\n";
 		} else {
-			$headers   = "From: $yourWebsite <$yourEmail>\n";
-			$headers  .= "Reply-To: {$_POST['email']}";
+			$headers   = "From: $yourWebsite <$yourEmail>\r\n";
+			$headers  .= "Reply-To: {$_POST['email']}\r\n";
 		}
 
 		if (mail($yourEmail,$subject,$message,$headers)) {
