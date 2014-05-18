@@ -143,6 +143,12 @@ function get_data($var) {
 			background: #b3ff69;
 			color: #4fa000;
 		}
+		.table_cont{
+		border: none;
+		}
+		.td_cont{
+		border: none;
+		}
 	</style>
 </head>
 <body>
@@ -175,32 +181,51 @@ if ($result != NULL) {
 ?>
 
 
+<table class="table_cont">
 
 <form action="<?php echo basename(__FILE__); ?>" method="post">
 <noscript>
 		<p><input type="hidden" name="nojs" id="nojs" /></p>
 </noscript>
 <p>
+     <tr><td class="td_cont">
 	<label for="name">Name: *</label> 
+         </td>
+        <td class="td_cont">
 		<input type="text" name="name" id="name" value="<?php get_data("name"); ?>" /><br />
-	
+	</td></tr>
+         <tr><td class="td_cont">
 	<label for="email">E-mail: *</label> 
+             </td>
+             <td class="td_cont">
 		<input type="text" name="email" id="email" value="<?php get_data("email"); ?>" /><br />
-	
+	</td></tr>
+         <tr><td class="td_cont">
 	<label for="url">Website URL:</label> 
+         </td>
+         <td class="td_contat">    
 		<input type="text" name="url" id="url" value="<?php get_data("url"); ?>" /><br />
-		
+	</td></tr>
+         <tr><td class="td_cont">
 	<label for="location">Location:</label>
+         </td>
+         <td class="td_cont">
 		<input type="text" name="location" id="location" value="<?php get_data("location"); ?>" /><br />
-	
+	</td>
+         <tr><td class="td_cont">
 	<label for="comments">Comments: *</label>
-		<textarea name="comments" id="comments" rows="5" cols="20"><?php get_data("comments"); ?></textarea><br />
+    </td>
+        <td class="td_cont"> 
+		<textarea name="comments" id="comments" rows="5" cols=40"><?php get_data("comments"); ?></textarea><br />
+    </td></tr>
 </p>
+     <tr><td class="td_cont">
 <p>
 	<input type="submit" name="submit" id="submit" value="Send" <?php if (isset($disable) && $disable === true) echo ' disabled="disabled"'; ?> />
 </p>
+         </td></tr>
 </form>
-
+        </table>
 <p>Powered by <a href="http://jemsmailform.com/">Jem's PHP Mail Form</a></p>
 
 
