@@ -96,11 +96,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 		if (strstr($_SERVER['SERVER_SOFTWARE'], "Win")) {
 			$headers   = "From: $yourEmail\r\n";
-			$headers  .= "Reply-To: {$_POST['email']}\r\n";
 		} else {
-			$headers   = "From: $yourWebsite <$yourEmail>\r\n";
-			$headers  .= "Reply-To: {$_POST['email']}\r\n";
+			$headers   = "From: $yourWebsite <$yourEmail>\r\n";	
 		}
+		$headers  .= "Reply-To: {$_POST['email']}\r\n";
 
 		if (mail($yourEmail,$subject,$message,$headers)) {
 			if (!empty($thanksPage)) {
@@ -148,8 +147,8 @@ function get_data($var) {
 <body>
 
 <!--
-	Free PHP Mail Form v2.4.3 - Secure single-page PHP mail form for your website
-	Copyright (c) Jem Turner 2007, 2008, 2010, 2011, 2012
+	Free PHP Mail Form v2.4.4 - Secure single-page PHP mail form for your website
+	Copyright (c) Jem Turner 2007-2014
 	http://jemsmailform.com/
 
 	This program is free software: you can redistribute it and/or modify
