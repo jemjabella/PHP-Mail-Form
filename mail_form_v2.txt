@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$points += 2;
 	if (strlen($_POST['name']) < 3)
 		$points += 1;
-	if (strlen($_POST['comments']) < 15 || strlen($_POST['comments'] > 1500))
+	if (strlen($_POST['comments']) < 15 || strlen($_POST['comments']) > 1500)
 		$points += 2;
 	if (preg_match("/[bcdfghjklmnpqrstvwxyz]{7,}/i", $_POST['comments']))
 		$points += 1;
