@@ -62,11 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$points += 1;
 	// end score assignments
 
-	foreach($requiredFields as $field) {
-		trim($_POST[$field]);
-		
-		if (!isset($_POST[$field]) || empty($_POST[$field]) && array_pop($error_msg) != "Please fill in all the required fields and submit again.\r\n")
-			$error_msg[] = "Please fill in all the required fields and submit again.";
+	if ( !empty( $requiredFields ) ) {
+		foreach($requiredFields as $field) {
+			trim($_POST[$field]);
+			
+			if (!isset($_POST[$field]) || empty($_POST[$field]) && array_pop($error_msg) != "Please fill in all the required fields and submit again.\r\n")
+				$error_msg[] = "Please fill in all the required fields and submit again.";
+		}
 	}
 
 	if (!empty($_POST['name']) && !preg_match("/^[a-zA-Z-'\s]*$/", stripslashes($_POST['name'])))
@@ -147,8 +149,8 @@ function get_data($var) {
 <body>
 
 <!--
-	Free PHP Mail Form v2.4.4 - Secure single-page PHP mail form for your website
-	Copyright (c) Jem Turner 2007-2014
+	Free PHP Mail Form v2.4.5 - Secure single-page PHP mail form for your website
+	Copyright (c) Jem Turner 2007-2017
 	http://jemsmailform.com/
 
 	This program is free software: you can redistribute it and/or modify
